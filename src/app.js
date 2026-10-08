@@ -116,6 +116,6 @@ let lastDay=today();setInterval(()=>{if(today()!==lastDay){lastDay=today();rende
 
 if(demo)showApp();else watchAuth((user,error)=>{if(user){showApp();}else{loggedIn=false;ready=false;data={members:[],payments:[]};unsubscribe?.();unsubscribe=null;if(modal.open){modalBusy=false;closeModal(true);}$('#app-shell').hidden=true;$('#login-screen').hidden=false;if(error)$('#login-error').textContent=error;}});
 
-const match=location.pathname.match(/^\/apps\/([^/]+)\//);if(match){const id=encodeURIComponent(match[1]);fetch(`/app-session/me?app_id=${id}`).then(r=>r.ok?r.json():null).then(u=>{if(u){const el=$('#museUserNickname');if(el) el.textContent=u.nickname \vert{}\vert{} u.email?.split('@')[0] \vert{}\vert{} '';$('#museUser').hidden=false;const badgeSpan = document.querySelector('.muse-badge span'); if(badgeSpan) badgeSpan.style.display='none';}}).catch(()=>{});$('#museLogout').onclick=()=>fetch(`/app-session/logout?app_id=${id}`,{method:'POST'}).then(()=>location.reload());}
-
+// Sửa thành:
+if(u){const el=$('#museUserNickname');if(el) el.textContent=u.nickname || u.email?.split('@')[0] || '';$('#museUser').hidden=false;const badgeSpan = document.querySelector('.muse-badge span'); if(badgeSpan) badgeSpan.style.display='none';}
 refreshIcons();
