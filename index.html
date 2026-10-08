@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23101112'/%3E%3Cpath d='M5 11h4v10H5zm5-3h4v16h-4zm8 0h4v16h-4zm5 3h4v10h-4zM14 14h4v4h-4z' fill='%23ff8b3d'/%3E%3C/svg%3E">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gym Manager • Quản lý phòng tập</title><meta name="description" content="Quản lý thành viên, gia hạn gói tập 30 ngày và theo dõi tiền tập với Firebase."><meta property="og:title" content="Gym Manager"><meta property="og:description" content="Quản lý phòng gym dành cho chủ phòng tập."><meta property="og:locale" content="vi_VN"><meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<a class="skip" href="#content">Đến nội dung chính</a>
+<section id="login-screen" class="login-layout">
+  <div class="login-visual"><img src="assets/images/gym-login.png" alt="Phòng tập với thiết bị thép đen và ánh sáng cam" width="1024" height="1536"><div class="photo-caption"><span class="eyebrow">YOUR GYM. YOUR CONTROL.</span><h1>Mỗi thành viên.<br>Một hành trình.</h1><p>Giữ nhịp phòng tập. Theo sát từng kỳ gia hạn.</p></div></div>
+  <div class="login-panel"><div class="login-inner"><div class="brand"><span class="brand-icon"><i data-lucide="dumbbell"></i></span><div>GYM<span>MANAGER</span></div></div><span class="eyebrow">KHÔNG GIAN QUẢN LÝ</span><h2>Chào mừng trở lại.</h2><p class="muted">Đăng nhập để quản lý thành viên và kỳ đóng tiền của phòng tập.</p>
+    <form id="login-form"><label>Email quản lý<input name="email" type="email" autocomplete="username" required placeholder="Email tài khoản Firebase"></label><label>Mật khẩu<div class="password-wrap"><input id="password" name="password" type="password" autocomplete="current-password" minlength="6" required><button type="button" id="toggle-password" aria-label="Hiện mật khẩu"><i data-lucide="eye"></i></button></div></label><p id="login-error" class="error" role="alert"></p><button class="primary full" type="submit">Đăng nhập <i data-lucide="arrow-right"></i></button></form>
+    <div class="secure-note"><i data-lucide="shield-check"></i><span>Chỉ tài khoản quản lý được cấp quyền truy cập dữ liệu.</span></div><a class="demo-link" href="?demo=1">Khám phá bản minh họa <span aria-hidden="true">↗</span></a>
+  </div><small class="login-footer">GYM MANAGER / GÓI TẬP 30 NGÀY</small></div>
+</section>
+<div id="app-shell" hidden>
+  <aside class="sidebar"><div class="brand"><span class="brand-icon"><i data-lucide="dumbbell"></i></span><div>GYM<span>MANAGER</span></div></div><span class="nav-label">ĐIỀU HÀNH PHÒNG TẬP</span><nav aria-label="Điều hướng chính"><a href="#overview" data-route="overview"><i data-lucide="layout-dashboard"></i>Tổng quan</a><a href="#members" data-route="members"><i data-lucide="users"></i>Thành viên</a><a href="#alerts" data-route="alerts"><i data-lucide="bell"></i>Cảnh báo <span id="nav-alert-count" class="nav-count">0</span></a><a href="#payments" data-route="payments"><i data-lucide="wallet"></i>Thu tiền</a><a href="#settings" data-route="settings"><i data-lucide="settings-2"></i>Thiết lập</a></nav><div class="sidebar-bottom"><div class="owner-avatar">TM</div><div><strong>Thịnh Minh</strong><small>Chủ phòng tập</small></div><button id="logout" aria-label="Đăng xuất" title="Đăng xuất"><i data-lucide="log-out"></i></button></div></aside>
+  <main id="content" tabindex="-1"><div id="demo-banner" class="notice demo" hidden><i data-lucide="flask-conical"></i><span><strong>Bản minh họa</strong> · Dữ liệu giả, không ghi vào Firebase. Tải lại để đặt lại.</span><a href="?">Đến đăng nhập</a></div><div id="network-banner" class="notice warning" hidden>Đang ngoại tuyến. Thao tác ghi dữ liệu thật tạm dừng.</div><header class="topbar"><div><div class="eyebrow" id="header-date"></div><h1 id="page-title">Tổng quan phòng tập</h1><p id="page-subtitle" class="muted">Mọi thành viên. Mọi kỳ gia hạn. Trong tầm kiểm soát.</p></div><button id="add-member" class="primary"><i data-lucide="plus"></i>Thêm thành viên</button></header><div id="connection-error" class="notice warning" hidden><span id="connection-message"></span><button id="retry">Thử lại</button></div><div id="view"></div><footer class="page-footer"><span>Gói 30 ngày · Nhắc trước 3 ngày</span><span id="sync-status">Đang kết nối…</span></footer></main>
+</div>
+<dialog id="modal" aria-labelledby="modal-title"><div id="modal-content"></div></dialog><div id="toast" role="status" aria-live="polite" hidden></div>
+<div id="museUser" hidden><span id="museUserNickname"></span><button id="museLogout">Đăng xuất phiên xem trước</button></div>
+<a class="muse-badge" href="https://museai.im/home" target="_blank" rel="noopener noreferrer"><img src="assets/images/icon.png" alt="" aria-hidden="true"><span>Build by MuseWork</span></a>
+<script type="module" src="/src/app.js"></script>
+</body></html>

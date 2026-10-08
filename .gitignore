@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+chrome-profile/
+test-results/
+playwright-report/
+*.log
+doc/*.png
+doc/browser-results.json

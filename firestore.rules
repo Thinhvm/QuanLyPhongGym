@@ -1,0 +1,40 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function owner() { return request.auth != null && request.auth.uid == 'e7uKXGmYtYYjFkfFdYLTgcwhNtr2'; }
+    function date(s) { return s is string && s.matches('^(20[0-9]{2}|2100)-[0-9]{2}-[0-9]{2}$'); }
+    function amount(n) { return n is int && n >= 1 && n <= 100000000; }
+    function member(m) {
+      return m.keys().hasAll(['name','phone','notes','monthlyFee','joinedAt','expiresAt','createdAt','updatedAt'])
+        && m.keys().hasOnly(['name','phone','notes','monthlyFee','joinedAt','expiresAt','createdAt','updatedAt'])
+        && m.name is string && m.name.size() >= 2 && m.name.size() <= 100
+        && m.phone is string && m.phone.size() >= 7 && m.phone.size() <= 20
+        && m.notes is string && m.notes.size() <= 1000
+        && amount(m.monthlyFee) && date(m.joinedAt) && date(m.expiresAt) && m.expiresAt >= m.joinedAt
+        && m.createdAt is timestamp && m.updatedAt == request.time;
+    }
+    match /members/{id} {
+      allow read: if owner();
+      allow create: if owner() && member(request.resource.data) && request.resource.data.createdAt == request.time;
+      allow update: if owner() && member(request.resource.data) && request.resource.data.createdAt == resource.data.createdAt;
+      allow delete: if owner();
+    }
+    match /payments/{id} {
+      allow read: if owner();
+      allow create: if owner()
+        && request.resource.data.keys().hasAll(['memberId','memberName','paidAt','amount','oldExpiry','newExpiry','kind','createdAt'])
+        && request.resource.data.keys().hasOnly(['memberId','memberName','paidAt','amount','oldExpiry','newExpiry','kind','createdAt'])
+        && request.resource.data.memberId is string && request.resource.data.memberId.size() > 0
+        && request.resource.data.memberName is string && request.resource.data.memberName.size() >= 2 && request.resource.data.memberName.size() <= 100
+        && amount(request.resource.data.amount)
+        && date(request.resource.data.paidAt) && date(request.resource.data.oldExpiry) && date(request.resource.data.newExpiry)
+        && request.resource.data.newExpiry >= request.resource.data.oldExpiry
+        && request.resource.data.newExpiry >= request.resource.data.paidAt
+        && request.resource.data.kind in ['initial','renewal']
+        && request.resource.data.createdAt == request.time
+        && getAfter(/databases/$(database)/documents/members/$(request.resource.data.memberId)).data.expiresAt == request.resource.data.newExpiry;
+      allow update, delete: if false;
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}
