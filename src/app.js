@@ -1,4 +1,4 @@
-import { createIcons, dumbbell, arrowRight, shieldCheck, eye, layoutDashboard, users, bell, wallet, settings2, logOut, plus, flaskConical, badgeCheck, clock3, triangleAlert, bellRing, arrowUpRight, search, ellipsis, chevronLeft, chevronRight, x, trash2 } from 'https://cdn.jsdelivr.net/npm/lucide@latest/dist/esm/lucide.js';
+import { createIcons, dumbbell, arrowRight, shieldCheck, eye, layoutDashboard, users, bell, wallet, settings2, logOut, plus, flaskConical, badgeCheck, clock3, triangleAlert, bellRing, arrowUpRight, search, ellipsis, chevronLeft, chevronRight, x, trash } from 'https://cdn.jsdelivr.net/npm/lucide@latest/dist/esm/lucide.js';
 
 const icons = { 
   Dumbbell: dumbbell, 
@@ -23,7 +23,7 @@ const icons = {
   ChevronLeft: chevronLeft, 
   ChevronRight: chevronRight, 
   X: x, 
-  Trash2: trash2 
+  Trash2: trash 
 };
 
 import { today, TZ, addDays, daysLeft, status, LABELS, formatDate, money, filterMembers, validateMember, validatePayment, renewExpiry } from './logic.js';
@@ -67,7 +67,8 @@ function render(){
  $('#page-title').textContent=titles[r][0];$('#page-subtitle').textContent=titles[r][1];$('#header-date').textContent=`${formatDate(today())} / GIỜ VIỆT NAM`;
  document.querySelectorAll('[data-route]').forEach(a=>{a.classList.toggle('active',a.dataset.route===r);a.setAttribute('aria-current',a.dataset.route===r?'page':'false');});
  $('#nav-alert-count').textContent=data.members.filter(m=>status(m.expiresAt)!=='active').length;
-$('#add-member').hidden = r === 'settings' || r === 'payments'; $('#view').innerHTML=r==='settings'?settingsView():!ready?empty('Đang chờ dữ liệu', $('#connection-error').hidden?'Đang kết nối an toàn với Firebase…':'Hãy xử lý lỗi kết nối rồi nhấn Thử lại.'):r==='payments'?paymentsView():membersView();refreshIcons();
+ $('#add-member').hidden = r === 'settings' || r === 'payments'; 
+ $('#view').innerHTML=r==='settings'?settingsView():!ready?empty('Đang chờ dữ liệu', $('#connection-error').hidden?'Đang kết nối an toàn với Firebase…':'Hãy xử lý lỗi kết nối rồi nhấn Thử lại.'):r==='payments'?paymentsView():membersView();refreshIcons();
 }
 
 function connect(){unsubscribe?.();ready=false;$('#connection-error').hidden=true;render();try{unsubscribe=store.listen(d=>{data=d;ready=true;$('#sync-status').textContent=demo?'Dữ liệu minh họa · Không lưu':'Đã đồng bộ với Firebase';render();},e=>{ready=false;data={members:[],payments:[]};$('#connection-message').textContent=friendlyError(e);$('#connection-error').hidden=false;$('#sync-status').textContent='Chưa đồng bộ';render();});}catch(e){$('#connection-message').textContent=friendlyError(e);$('#connection-error').hidden=false;render();}}
@@ -115,6 +116,6 @@ let lastDay=today();setInterval(()=>{if(today()!==lastDay){lastDay=today();rende
 
 if(demo)showApp();else watchAuth((user,error)=>{if(user){showApp();}else{loggedIn=false;ready=false;data={members:[],payments:[]};unsubscribe?.();unsubscribe=null;if(modal.open){modalBusy=false;closeModal(true);}$('#app-shell').hidden=true;$('#login-screen').hidden=false;if(error)$('#login-error').textContent=error;}});
 
-// Sửa lại thành:
-$('#museUserNickname').textContent = u.nickname || u.email?.split('@')[0] || '';
+const match=location.pathname.match(/^\/apps\/([^/]+)\//);if(match){const id=encodeURIComponent(match[1]);fetch(`/app-session/me?app_id=${id}`).then(r=>r.ok?r.json():null).then(u=>{if(u){const el=$('#museUserNickname');if(el) el.textContent=u.nickname \vert{}\vert{} u.email?.split('@')[0] \vert{}\vert{} '';$('#museUser').hidden=false;const badgeSpan = document.querySelector('.muse-badge span'); if(badgeSpan) badgeSpan.style.display='none';}}).catch(()=>{});$('#museLogout').onclick=()=>fetch(`/app-session/logout?app_id=${id}`,{method:'POST'}).then(()=>location.reload());}
+
 refreshIcons();
