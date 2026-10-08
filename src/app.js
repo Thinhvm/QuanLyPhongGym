@@ -67,8 +67,7 @@ function render(){
  $('#page-title').textContent=titles[r][0];$('#page-subtitle').textContent=titles[r][1];$('#header-date').textContent=`${formatDate(today())} / GIỜ VIỆT NAM`;
  document.querySelectorAll('[data-route]').forEach(a=>{a.classList.toggle('active',a.dataset.route===r);a.setAttribute('aria-current',a.dataset.route===r?'page':'false');});
  $('#nav-alert-count').textContent=data.members.filter(m=>status(m.expiresAt)!=='active').length;
- $('#add-member').hidden=r==='settings'\vert{}\vert{}r==='payments';$('#add-member').disabled=!ready||(!demo&&!navigator.onLine);
- $('#view').innerHTML=r==='settings'?settingsView():!ready?empty('Đang chờ dữ liệu', $('#connection-error').hidden?'Đang kết nối an toàn với Firebase…':'Hãy xử lý lỗi kết nối rồi nhấn Thử lại.'):r==='payments'?paymentsView():membersView();refreshIcons();
+$('#add-member').hidden = r === 'settings' || r === 'payments'; $('#view').innerHTML=r==='settings'?settingsView():!ready?empty('Đang chờ dữ liệu', $('#connection-error').hidden?'Đang kết nối an toàn với Firebase…':'Hãy xử lý lỗi kết nối rồi nhấn Thử lại.'):r==='payments'?paymentsView():membersView();refreshIcons();
 }
 
 function connect(){unsubscribe?.();ready=false;$('#connection-error').hidden=true;render();try{unsubscribe=store.listen(d=>{data=d;ready=true;$('#sync-status').textContent=demo?'Dữ liệu minh họa · Không lưu':'Đã đồng bộ với Firebase';render();},e=>{ready=false;data={members:[],payments:[]};$('#connection-message').textContent=friendlyError(e);$('#connection-error').hidden=false;$('#sync-status').textContent='Chưa đồng bộ';render();});}catch(e){$('#connection-message').textContent=friendlyError(e);$('#connection-error').hidden=false;render();}}
