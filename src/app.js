@@ -41,8 +41,7 @@ function render(){
  $('#page-title').textContent=titles[r][0];$('#page-subtitle').textContent=titles[r][1];$('#header-date').textContent=`${formatDate(today())} / GIỜ VIỆT NAM`;
  document.querySelectorAll('[data-route]').forEach(a=>{a.classList.toggle('active',a.dataset.route===r);a.setAttribute('aria-current',a.dataset.route===r?'page':'false');});
  $('#nav-alert-count').textContent=data.members.filter(m=>status(m.expiresAt)!=='active').length;
- $('#add-member').hidden=r==='settings'\vert{}\vert{}r==='payments';$('#add-member').disabled=!ready||(!demo&&!navigator.onLine);
- $('#view').innerHTML=r==='settings'?settingsView():!ready?empty('Đang chờ dữ liệu', $('#connection-error').hidden?'Đang kết nối an toàn với Firebase…':'Hãy xử lý lỗi kết nối rồi nhấn Thử lại.'):r==='payments'?paymentsView():membersView();refreshIcons();
+$('#add-member').hidden = r === 'settings' || r === 'payments'; $('#view').innerHTML=r==='settings'?settingsView():!ready?empty('Đang chờ dữ liệu', $('#connection-error').hidden?'Đang kết nối an toàn với Firebase…':'Hãy xử lý lỗi kết nối rồi nhấn Thử lại.'):r==='payments'?paymentsView():membersView();refreshIcons();
 }
 function connect(){unsubscribe?.();ready=false;$('#connection-error').hidden=true;render();try{unsubscribe=store.listen(d=>{data=d;ready=true;$('#sync-status').textContent=demo?'Dữ liệu minh họa · Không lưu':'Đã đồng bộ với Firebase';render();},e=>{ready=false;data={members:[],payments:[]};$('#connection-message').textContent=friendlyError(e);$('#connection-error').hidden=false;$('#sync-status').textContent='Chưa đồng bộ';render();});}catch(e){$('#connection-message').textContent=friendlyError(e);$('#connection-error').hidden=false;render();}}
 function showApp(){loggedIn=true;$('#login-screen').hidden=true;$('#app-shell').hidden=false;$('#demo-banner').hidden=!demo;connect();}
@@ -85,5 +84,4 @@ function network(){ $('#network-banner').hidden=navigator.onLine||demo;render();
 window.addEventListener('offline',network);window.addEventListener('online',()=>{network();if(loggedIn&&!demo)connect();});
 let lastDay=today();setInterval(()=>{if(today()!==lastDay){lastDay=today();render();}},30000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)render();});
 if(demo)showApp();else watchAuth((user,error)=>{if(user){showApp();}else{loggedIn=false;ready=false;data={members:[],payments:[]};unsubscribe?.();unsubscribe=null;if(modal.open){modalBusy=false;closeModal(true);}$('#app-shell').hidden=true;$('#login-screen').hidden=false;if(error)$('#login-error').textContent=error;}});
-const match=location.pathname.match(/^\/apps\/([^/]+)\//);if(match){const id=encodeURIComponent(match[1]);fetch(`/app-session/me?app_id=${id}`).then(r=>r.ok?r.json():null).then(u=>{if(u){$('#museUserNickname').textContent=u.nickname\vert{}\vert{}u.email?.split('@')[0]\vert{}\vert{}'';$('#museUser').hidden=false;$('.muse-badge span').style.display='none';}}).catch(()=>{});$('#museLogout').onclick=()=>fetch(`/app-session/logout?app_id=${id}`,{method:'POST'}).then(()=>location.reload());}
-refreshIcons();
+$('#museUserNickname').textContent = u.nickname || u.email?.split('@')[0] || '';refreshIcons();
