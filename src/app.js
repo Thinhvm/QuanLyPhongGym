@@ -39,8 +39,11 @@ const store = demo ? createDemoStore() : liveStore;
 let data={members:[],payments:[]}, ready=false, loggedIn=demo, unsubscribe=null, query='', filter='all', sort='expiry', page=1, modalBusy=false, originalForm='', returnFocus=null;
 const modal=$('#modal');
 const route=()=>['overview','members','alerts','payments','settings'].includes(location.hash.slice(1))?location.hash.slice(1):'overview';
-
-function refreshIcons(){createIcons({icons,attrs:{'aria-hidden':'true'}});}
+function refreshIcons(){
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+}
 function toast(text,error=false){const el=$('#toast');el.textContent=text;el.classList.toggle('error',error);el.hidden=false;clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.hidden=true,4000);}
 function dayText(m){const n=daysLeft(m.expiresAt);return n<0?`Quá hạn ${-n} ngày`:n===0?'Đến hạn hôm nay':`Còn ${n} ngày`;}
 function badge(m){const s=status(m.expiresAt);return `<span class="badge ${s}">${LABELS[s]}</span>`;}
