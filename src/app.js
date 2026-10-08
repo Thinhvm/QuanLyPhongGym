@@ -1,10 +1,13 @@
 import './styles.css';
-import { createIcons, Dumbbell, ArrowRight, ShieldCheck, Eye, LayoutDashboard, Users, Bell, Wallet, Settings2, LogOut, Plus, FlaskConical, BadgeCheck, Clock3, TriangleAlert, BellRing, ArrowUpRight, Search, Ellipsis, ChevronLeft, ChevronRight, X, Trash2 } from 'lucide';
-const icons = { Dumbbell, ArrowRight, ShieldCheck, Eye, LayoutDashboard, Users, Bell, Wallet, Settings2, LogOut, Plus, FlaskConical, BadgeCheck, Clock3, TriangleAlert, BellRing, ArrowUpRight, Search, Ellipsis, ChevronLeft, ChevronRight, X, Trash2 };
+import { createIcons, dumbbell, arrowRight, shieldCheck, eye, layoutDashboard, users, bell, wallet, settings2, logOut, plus, flaskConical, badgeCheck, clock3, triangleAlert, bellRing, arrowUpRight, search, ellipsis, chevronLeft, chevronRight, x, trash2 } from 'https://unpkg.com/lucide@latest/dist/esm/lucide.js';
+
+const icons = { dumbbell, arrowRight, shieldCheck, eye, layoutDashboard, users, bell, wallet, settings2, logOut, plus, flaskConical, badgeCheck, clock3, triangleAlert, bellRing, arrowUpRight, search, ellipsis, chevronLeft, chevronRight, x, trash2 };
+
 import { today, TZ, addDays, daysLeft, status, LABELS, formatDate, money, filterMembers, validateMember, validatePayment, renewExpiry } from './logic.js';
 import { login, logout, watchAuth, liveStore, friendlyError } from './data.js';
 import { createDemoStore } from './demo.js';
 import { firebaseConfig, ADMIN_UID } from './firebase-config.js';
+
 const $ = selector => document.querySelector(selector);
 const esc = s => String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const icon = name => `<i data-lucide="${name}"></i>`;
