@@ -1,30 +1,4 @@
-import { createIcons, dumbbell, arrowRight, shieldCheck, eye, layoutDashboard, users, bell, wallet, settings2, logOut, plus, flaskConical, badgeCheck, clock3, triangleAlert, bellRing, arrowUpRight, search, ellipsis, chevronLeft, chevronRight, x, trash } from 'https://cdn.jsdelivr.net/npm/lucide@latest/dist/esm/lucide.js';
 
-const icons = { 
-  Dumbbell: dumbbell, 
-  ArrowRight: arrowRight, 
-  ShieldCheck: shieldCheck, 
-  Eye: eye, 
-  LayoutDashboard: layoutDashboard, 
-  Users: users, 
-  Bell: bell, 
-  Wallet: wallet, 
-  Settings2: settings2, 
-  LogOut: logOut, 
-  Plus: plus, 
-  FlaskConical: flaskConical, 
-  BadgeCheck: badgeCheck, 
-  Clock3: clock3, 
-  TriangleAlert: triangleAlert, 
-  BellRing: bellRing, 
-  ArrowUpRight: arrowUpRight, 
-  Search: search, 
-  Ellipsis: ellipsis, 
-  ChevronLeft: chevronLeft, 
-  ChevronRight: chevronRight, 
-  X: x, 
-  Trash2: trash 
-};
 
 import { today, TZ, addDays, daysLeft, status, LABELS, formatDate, money, filterMembers, validateMember, validatePayment, renewExpiry } from './logic.js';
 import { login, logout, watchAuth, liveStore, friendlyError } from './data.js';
