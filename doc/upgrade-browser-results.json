@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "journeys": [
+    "package add/edit/disable",
+    "photo invalid/preview/save/remove",
+    "actual initial amount",
+    "calendar renewal and actual amount",
+    "month/quarter/year stats",
+    "missing member link",
+    "alert exact member",
+    "XSS literal",
+    "responsive 375/768/812/1440",
+    "reduced motion",
+    "login guard"
+  ],
+  "errors": [],
+  "productionWrites": [],
+  "limits": [
+    "live auth and Firebase Rules runtime not tested",
+    "real phone camera not tested"
+  ]
+}
