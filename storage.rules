@@ -1,0 +1,12 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /member-photos/{uid}/{file} {
+      allow read: if request.auth != null && request.auth.uid == 'OCeRxZjl97dKea1iQvnaxZJMUjo1' && uid == request.auth.uid;
+      allow create: if request.auth != null && request.auth.uid == 'OCeRxZjl97dKea1iQvnaxZJMUjo1' && uid == request.auth.uid
+        && request.resource.size <= 1048576 && request.resource.contentType == 'image/jpeg';
+      allow update, delete: if false;
+    }
+    match /{path=**} { allow read, write: if false; }
+  }
+}

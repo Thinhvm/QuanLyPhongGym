@@ -1,5 +1,20 @@
 # Gym Manager — Design specification
 
+## Upgrade baseline — supersedes conflicting legacy rules below
+Direction: Vietnamese owner-only operations dashboard, cream/teal administrative desk. Approachable, structured, legible; variance 5/10, motion 2/10, density 5/10, color 5/10. Confirmed cream/teal overrides athletic orange design search suggestions. Data-first, no marketing or gamification.
+
+Typography: Fira Sans 400/500/600/700 heading/body, Vietnamese support, swap and system fallback. H1 clamp(28px,3vw,40px)/1.2, H2 24px/1.3, body 16px/1.6, helpers 13–14px, tabular numbers. Tokens: bg #f6f4ed, surface #ffffff, elevated #edf5f2, text #173c37, muted #536b66, accent #087f70, hover #066657, border #c9d9d2, danger #b42332, success #166b45, warning #8a5209; primary white on teal. Light semantic badges with text. 8/16/24/32 spacing, radius 12, decorative teal top border and subtle panel shadow.
+
+Layout: horizontal navigation above all screens, max 1440px main with 32px desktop gutters. Four member cards above three financial metrics, month/quarter/year selectors, exact monthly table with inline labelled revenue bars, member table below. New registrations = unique initial receipt member IDs; renewals = renewal receipts; revenue = amount grouped by paidAt including deleted-member history. No fabricated trends. Package grid add/edit/disable with price in VND. Alert counts filter lists; member badges link by ID to exact profile, handle missing IDs.
+
+Forms: optional gallery/capture photo JPG/PNG/WebP <=5MB source, browser shrink to 800px and <=1MB JPEG. Preview/remove/loading/errors; capture=environment opens native phone camera where supported, desktop may open file chooser. Protected Storage paths with authenticated getBlob and session object URLs; revoke on logout, no public token URLs. Preserve old HTTPS avatars. Upload on submit only; failure retains form, orphan objects possible after failed Firestore save, no automated deletion. Add separates actual paidAt/amount from joinedAt. Gói 1/2/3 months 250000/500000/700000 starter presets; further prices entered by owner. Calendar months clamp month-end, expiry inclusive; legacy no-plan members remain 30-day until explicit new package. Seven-day warning. Edit never rewrites ledger/dates silently, disabled plans remain historical.
+
+Motion: view fade 220ms, modal scale/fade 180ms, hover/focus color 180ms. No scroll animation in tables for clarity, reduced-motion disables all. Visible labels, >=44px targets, role alert errors, polite toast, dirty image/form cancellation confirmation, focus restoration. Loading/offline/empty/no-results/error with retry states retained; demo memory-only, no live data before owner login.
+
+Visuals: retain existing original generated login gym photo for continuity behind scrim and white caption. Operational data screens intentionally image-free because decoration reduces usability; member photos are owner content, never generated identities. Existing badge skeleton/icon retained with teal theme. Preview session integration only /apps/{id}/ and one fetch; GitHub skips it. Teal abstract barbell SVG first head link.
+
+Responsive: 1440 desktop four counters/three finance cards, 768 two counters with wrapping nav, 375 two compact counters/one finance column, stacked controls/member cards/forms, one package column, no overflow. Landscape 812x375 scroll naturally; 16px phone inputs, 88px photo preview and wrapping buttons, bottom clearance for badge. Technical: existing Vite/Firebase and base './', src/features.js helpers, upgrade tests, storage.rules. Confirmed owner UID matches both rules. No database migration, no automatic commit/push. Handoff includes rule publication, Storage CORS for authenticated blobs, real-phone/live-auth verification caveats.
+
 ## 1. Design Direction
 Reading this as a Vietnamese gym operations dashboard for one owner, with black/orange athletic block-based visual language. Keywords: structured, energetic, legible. Prioritize expiring memberships over decorative analytics; no attendance.
 

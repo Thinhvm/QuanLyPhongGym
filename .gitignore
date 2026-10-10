@@ -9,3 +9,5 @@ playwright-report/
 *.log
 doc/*.png
 doc/browser-results.json
+doc/upgrade-*.cjs
+doc/upgrade-browser-results.json

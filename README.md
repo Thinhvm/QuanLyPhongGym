@@ -1,6 +1,8 @@
 # Gym Manager — Quản lý phòng gym
 
-Website tiếng Việt, phong cách đen–cam, dành cho một chủ phòng tập. Chạy trên GitHub Pages, dữ liệu trên Firebase Authentication + Cloud Firestore.
+Website tiếng Việt, giao diện kem–xanh ngọc, dành cho một chủ phòng tập. Chạy trên GitHub Pages, dữ liệu trên Firebase Authentication + Cloud Firestore + Storage.
+
+**Bản nâng cấp mới:** xem [doc/UPGRADE.md](doc/UPGRADE.md) để triển khai ảnh hội viên, danh mục gói tháng, cảnh báo 7 ngày và thống kê tháng/quý/năm. Hướng dẫn nâng cấp thay thế các mô tả gói 30 ngày/nhắc 3 ngày còn lưu trong phần tài liệu lịch sử bên dưới; dữ liệu hội viên cũ không tự chuyển hạn. Cần Publish cả `firestore.rules` và `storage.rules`, kiểm tra CORS ảnh trước khi dùng dữ liệu thật. Mã đã sửa trên máy, chưa commit/push hoặc thay đổi cấu hình cloud.
 
 ## Đã có trong mã nguồn
 - Đăng nhập Email/Password, giới hạn một UID quản lý.
@@ -14,7 +16,7 @@ Website tiếng Việt, phong cách đen–cam, dành cho một chủ phòng t�
 Không có điểm danh, tự thanh toán, Zalo/email, thông báo khi website đã đóng, hoặc kế toán đối soát công nợ. Cảnh báo là trạng thái trong web, tự cập nhật khi đang mở.
 
 ## 1. Chuẩn bị Firebase (bắt buộc trước dữ liệu thật)
-Project đã cấu hình: `quanlyphonggym-5d548`. UID quản lý: `e7uKXGmYtYYjFkfFdYLTgcwhNtr2`.
+Project đã cấu hình: `quanlyphonggym-5d548`. UID quản lý: `OCeRxZjl97dKea1iQvnaxZJMUjo1`.
 
 1. Mở Firebase Console, chọn project.
 2. Authentication → Sign-in method → bật **Email/Password**. Trong Users, kiểm tra tài khoản dùng đăng nhập có UID đúng như trên. Không tạo tài khoản khác thay cho tài khoản này nếu muốn giữ UID.
